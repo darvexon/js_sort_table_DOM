@@ -51,8 +51,8 @@ function addEventsToHeaders(list) {
 
 function sortByNumber(list, column, sortingSystem) {
   const sortedList = [...list].sort((element1, element2) => {
-    const number1 = element1.children[column].textContent;
-    const number2 = element2.children[column].textContent;
+    const number1 = Number(element1.children[column].textContent);
+    const number2 = Number(element2.children[column].textContent);
 
     if (sortingSystem === SORT_IN_ASCEDING_ORDER) {
       return number1 - number2;
@@ -70,12 +70,10 @@ function sortByString(list, column, sortingSystem) {
   const sortedList = [...list].sort((element1, element2) => {
     const string1 = element1.children[column].textContent
       .toLowerCase()
-      .split(' ')
-      .join('');
+      .replaceAll(' ', '');
     const string2 = element2.children[column].textContent
       .toLowerCase()
-      .split(' ')
-      .join('');
+      .replaceAll(' ', '');
 
     if (sortingSystem === SORT_IN_ASCEDING_ORDER) {
       return string1.localeCompare(string2);
@@ -91,8 +89,12 @@ function sortByString(list, column, sortingSystem) {
 
 function sortBySalary(list, column, sortingSystem) {
   const sortedList = [...list].sort((element1, element2) => {
-    const salary1 = element1.children[column].textContent.split(/\D/g).join('');
-    const salary2 = element2.children[column].textContent.split(/\D/g).join('');
+    const salary1 = Number(
+      element1.children[column].textContent.replaceAll(/\D/g, '')
+    );
+    const salary2 = Number(
+      element2.children[column].textContent.replaceAll(/\D/g, '')
+    );
 
     if (sortingSystem === SORT_IN_ASCEDING_ORDER) {
       return salary1 - salary2;
